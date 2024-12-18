@@ -1,0 +1,85 @@
+Creating a Online Quiz Maker using html,css,javascript
+LEVEL2 TASK2 create a quiz maker
+html code
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Maker</title>
+    <link rel="stylesheet" href="quiz-maker.css">
+</head>
+<body>
+    <header>
+        <h1>Quiz Maker</h1>
+    </header>
+    <main>
+        <section id="create-quiz">
+            <h2>Create Quiz</h2>
+            <form id="quiz-form">
+                <label for="question">Question:</label>
+                <input type="text" id="question" required>
+                <label for="options">Options (comma separated):</label>
+                <input type="text" id="options" required>
+                <label for="answer">Correct Answer:</label>
+                <input type="text" id="answer" required>
+                <button type="submit">Add Question</button>
+            </form>
+        </section>
+        <section id="quiz-list">
+            <h2>Quiz Questions</h2>
+            <ul id="questions"></ul>
+        </section>
+    </main>
+    <script src="quiz-maker.js"></script>
+</body>
+</html>
+css code
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #444;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+main {
+    padding: 1rem;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+}
+form input, form button {
+    margin-bottom: 10px;
+}
+javscript code
+const quizForm = document.getElementById('quiz-form');
+const questionsList = document.getElementById('questions');
+
+let questions = [];
+
+quizForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const question = document.getElementById('question').value;
+    const options = document.getElementById('options').value.split(',');
+    const answer = document.getElementById('answer').value;
+
+    questions.push({ question, options, answer });
+    displayQuestions();
+    quizForm.reset();
+});
+
+function displayQuestions() {
+    questionsList.innerHTML = questions.map((q, index) => `
+        <li>
+            <h4>${index + 1}. ${q.question}</h4>
+            <p>Options: ${q.options.join(', ')}</p>
+            <p>Answer: ${q.answer}</p>
+        </li>
+    `).join('');
+}
